@@ -1,6 +1,7 @@
 # AI Worksheet Converter
 
-An easy-to-use web app that transforms traditional educational worksheets into engaging, interactive tasks — ideal for homeschooling, tutoring, or classroom use.
+An easy-to-use web app that transforms traditional educational worksheets into engaging, interactive tasks, ideal for homeschooling, tutoring, or classroom use.
+A fully packaged product, ready for commercial deployment with integrated account management and paid subscription support.
 
 ---
 
@@ -22,15 +23,16 @@ Upload a PDF or Word worksheet and watch it turn into live interactive tasks in 
 
 Upload worksheets, enter your email, and hit **Generate Interactive Tasks**.
 
-![Main Interface](Main%20Interface.jpg)
+<img src="Main Interface.jpg" width="800"/>
+
 
 ---
 
-### 🔹 Pricing Plans
+### 🔹 Example: Question Creation
 
-Simple pricing with a generous free tier and affordable monthly upgrade.
+Automatically generate interactive question types: open-ended, drag & drop, and multiple choice.
 
-![Pricing](Pricing.jpg)
+<img src="WC Question Creation .jpg" width="800"/>
 
 ---
 
@@ -38,7 +40,15 @@ Simple pricing with a generous free tier and affordable monthly upgrade.
 
 All uploaded worksheets are stored here, with task generation status and access to view completed tasks.
 
-![Stored Worksheets](Stored%20Worksheets.jpg)
+<img src="Stored Worksheets.jpg" width="800"/>
+
+---
+
+### 🔹 Pricing Plans
+
+Simple pricing with a generous free tier and affordable monthly upgrade.
+
+<img src="Pricing.jpg" width="800"/>
 
 ---
 
@@ -46,7 +56,7 @@ All uploaded worksheets are stored here, with task generation status and access 
 
 Track your usage, membership tier, and upgrade easily when needed.
 
-![Accounts Page](Accounts%20Page.jpg)
+<img src="Accounts Page.jpg" width="800"/>
 
 ---
 
@@ -54,7 +64,8 @@ Track your usage, membership tier, and upgrade easily when needed.
 
 Have a question? Reach out via the built-in contact form.
 
-![Contact Page](Contact%20Page.jpg)
+<img src="Contact Page.jpg" width="800"/>
+
 
 ---
 
@@ -97,3 +108,4 @@ This project is licensed under the MIT License.
 
 Made by Ruvel Miah  
 For issues, feedback, or collaboration, feel free to open an issue or get in touch via GitHub.
+
