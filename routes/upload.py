@@ -6,6 +6,7 @@ from services.file_processor import FileProcessor
 from services.ai_task_generator import AITaskGenerator
 from services.task_converter import TaskConverter
 from services.subscription_service import SubscriptionService
+from services.email_verification import EmailVerificationService
 from models import Worksheet, db
 
 logger = logging.getLogger(__name__)
@@ -22,6 +23,23 @@ def upload_file():
         if not user_email:
             flash('Email is required. Please provide your email address.', 'error')
             return redirect(url_for('index'))
+        
+        # Check if email is verified
+        if not EmailVerificationService.is_email_verified(user_email):
+            # Create verification request and send email
+            try:
+                token = EmailVerificationService.create_verification_request(user_email)
+                if EmailVerificationService.send_verification_email(user_email, token):
+                    session['pending_verification_email'] = user_email
+                    flash('Please verify your email address first. Check your inbox for verification instructions.', 'warning')
+                    return redirect(url_for('verification.verification_pending'))
+                else:
+                    flash('Email verification required. Please check your internet connection and try again.', 'error')
+                    return redirect(url_for('index'))
+            except Exception as e:
+                logger.error(f"Error creating verification: {e}")
+                flash('Error processing email verification. Please try again.', 'error')
+                return redirect(url_for('index'))
         
         # Check usage limits
         if not SubscriptionService.check_usage_limit(user_email):

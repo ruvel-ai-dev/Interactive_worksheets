@@ -18,14 +18,16 @@ The application follows a modular Flask architecture with clear separation of co
 
 ### Backend Services
 - **FileProcessor**: Handles file upload validation and text extraction from PDF/DOCX files using PyPDF2 and python-docx
-- **AITaskGenerator**: Integrates with OpenAI's GPT-4o model to generate educational tasks from extracted text
+- **AITaskGenerator**: Integrates with OpenAI's GPT-4o model to generate 10-20 educational tasks from extracted text with intelligent variation
 - **TaskConverter**: Manages conversion of AI-generated tasks to database models and retrieval operations
+- **EmailVerificationService**: Prevents fake email abuse through secure token-based email verification system
 
 ### Database Models
 - **Worksheet**: Stores uploaded file metadata, extracted text, and processing status
 - **Task**: Stores generated interactive tasks with JSON data structure for task-specific information
 - **TaskResponse**: Prepared for future student response tracking (currently unused)
 - **User**: Stores user information, subscription status, and usage tracking
+- **EmailVerification**: Stores secure verification tokens with 24-hour expiration to prevent fake email usage
 
 ### Route Blueprints
 - **upload_bp**: Handles file upload and processing workflow with subscription limits
@@ -86,6 +88,8 @@ Database configuration supports both SQLite (development) and PostgreSQL (produc
 - July 06, 2025: Added multi-currency support (USD $9.99, GBP £7.99) with dynamic pricing page
 - July 06, 2025: Added professional contact form with email forwarding to ruvel.ai.dev@gmail.com (email not exposed to users)
 - July 06, 2025: Added user-friendly error pages (404, 500) and performance caching system for AI-generated tasks
+- July 06, 2025: Enhanced AI task generation to create 10-20 questions with intelligent variation for limited content
+- July 06, 2025: Implemented comprehensive email verification system to prevent fake email abuse and ensure authentic user registration
 
 ## User Preferences
 

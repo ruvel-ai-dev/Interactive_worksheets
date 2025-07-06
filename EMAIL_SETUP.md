@@ -1,50 +1,45 @@
-# Email Configuration for Contact Form
+# Email Verification Setup
 
-## Setup Instructions
+The AI Worksheet Converter uses email verification to prevent abuse and ensure authentic user registration. Here's how to configure it:
 
-To enable email forwarding for the contact form, you need to configure SMTP settings in your Replit secrets.
+## Development Mode
+In development (no email configured), verification URLs are logged to console instead of sent via email.
 
-### Required Secrets
+## Production Setup
+To enable email verification in production, set these environment variables:
 
-Add these secrets in your Replit project:
+```bash
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USE_TLS=true
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
+MAIL_DEFAULT_SENDER=noreply@yourdomain.com
+```
 
-1. **MAIL_USERNAME** - Your email address (e.g., your-app@gmail.com)
-2. **MAIL_PASSWORD** - Your email password or app password
-3. **MAIL_DEFAULT_SENDER** - Default sender email (can be same as MAIL_USERNAME)
+## Gmail Setup
+1. Enable 2-factor authentication on your Gmail account
+2. Generate an "App Password" for this application
+3. Use the app password as MAIL_PASSWORD (not your regular password)
 
-### Gmail Setup (Recommended)
+## Alternative Email Providers
+- **SendGrid**: Use their SMTP settings
+- **Mailgun**: Use their SMTP settings
+- **AWS SES**: Use their SMTP settings
 
-If using Gmail:
-1. Create a Gmail account for your app
-2. Enable 2-factor authentication
-3. Generate an App Password (not your regular password)
-4. Use the App Password for MAIL_PASSWORD
+## Security Features
+- Tokens expire after 24 hours
+- Only verified emails can upload worksheets
+- Prevents fake email abuse
+- Secure token generation using secrets module
 
-### Default Configuration
-
-The contact form is configured to:
-- Use Gmail SMTP (smtp.gmail.com:587)
-- Forward messages to: `ruvel.ai.dev@gmail.com`
-- Your email address is NOT displayed to users
-- All contact form messages are forwarded securely
-
-### Fallback Behavior
-
-If email is not configured:
-- Messages are logged to console
-- User still sees success message
-- No email is sent (graceful fallback)
+## How It Works
+1. User enters email on upload form
+2. System checks if email is verified
+3. If not verified, sends verification email
+4. User clicks link to verify
+5. System marks email as verified
+6. User can now upload worksheets
 
 ## Testing
-
-1. Set up the email secrets
-2. Visit `/contact` page
-3. Submit a test message
-4. Check your inbox for the forwarded message
-
-## Security Notes
-
-- Your email address is never exposed to users
-- All messages are forwarded through the server
-- Users only see a generic success message
-- Email configuration is environment-based and secure
+In development, check console logs for verification URLs when testing with fake emails.

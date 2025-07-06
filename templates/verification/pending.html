@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Email Verification Required - AI Worksheet Converter{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-body text-center p-4">
+                    <div class="mb-4">
+                        <i data-feather="mail" style="width: 3rem; height: 3rem;" class="text-primary"></i>
+                    </div>
+                    
+                    <h2 class="h4 mb-3">Check Your Email</h2>
+                    <p class="text-muted mb-4">
+                        We've sent a verification link to:<br>
+                        <strong>{{ email or 'your email address' }}</strong>
+                    </p>
+                    
+                    <div class="alert alert-info">
+                        <i data-feather="info" class="me-2"></i>
+                        <strong>Next Steps:</strong>
+                        <ol class="list-unstyled mt-2 mb-0">
+                            <li>1. Check your email inbox</li>
+                            <li>2. Click the verification link</li>
+                            <li>3. Return here to start uploading worksheets</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <p class="small text-muted">Didn't receive an email?</p>
+                        <form action="{{ url_for('verification.resend_verification') }}" method="POST" class="d-inline">
+                            <input type="hidden" name="email" value="{{ email }}">
+                            <button type="submit" class="btn btn-outline-secondary">
+                                <i data-feather="refresh-cw" class="me-2"></i>
+                                Resend Email
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="text-start">
+                        <h6>Why verify your email?</h6>
+                        <ul class="small text-muted">
+                            <li>Prevents abuse and ensures fair usage</li>
+                            <li>Allows us to track your worksheet count</li>
+                            <li>Enables subscription management</li>
+                            <li>Provides account recovery options</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

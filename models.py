@@ -1,6 +1,6 @@
 from app import db
 from datetime import datetime
-from sqlalchemy import Text, JSON
+from sqlalchemy import Text, JSON, Column, Integer, String, DateTime, Boolean
 
 class Worksheet(db.Model):
     """Model for storing uploaded worksheets and their metadata"""
@@ -74,3 +74,15 @@ class User(db.Model):
         self.worksheets_processed += 1
         self.last_active = datetime.utcnow()
         db.session.commit()
+
+class EmailVerification(db.Model):
+    """Model for storing email verification tokens"""
+    __tablename__ = 'email_verification'
+    
+    id = Column(Integer, primary_key=True)
+    email = Column(String(255), nullable=False)
+    token = Column(String(100), nullable=False, unique=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    expires_at = Column(DateTime, nullable=False)
+    verified = Column(Boolean, default=False)
+    attempts = Column(Integer, default=0)

@@ -57,11 +57,13 @@ def create_app():
         from routes.tasks import tasks_bp
         from routes.subscription import subscription_bp
         from routes.contact import contact_bp
+        from routes.verification import verification_bp
         
         app.register_blueprint(upload_bp)
         app.register_blueprint(tasks_bp)
         app.register_blueprint(subscription_bp, url_prefix='/subscription')
         app.register_blueprint(contact_bp)
+        app.register_blueprint(verification_bp)
         
         # Error handlers
         @app.errorhandler(404)
