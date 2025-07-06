@@ -105,3 +105,12 @@ Preferred communication style: Simple, everyday language.
 - ✅ AI task generation creates 15 intelligent questions per worksheet
 - ✅ Database integration stores users, worksheets, tasks, and verification tokens
 - ✅ Complete workflow from email verification → payment → upload → task generation
+
+## Deployment
+
+The application is ready for production deployment with custom domain support. See `DEPLOYMENT_GUIDE.md` for detailed instructions on:
+- Setting up custom domains through Replit
+- Configuring DNS records
+- Environment variables for production
+- SSL certificate setup
+- Monitoring and scaling options
