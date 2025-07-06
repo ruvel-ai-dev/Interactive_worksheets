@@ -66,10 +66,10 @@ def upload_file():
         
         logger.info(f"Created worksheet record with ID: {worksheet.id}")
         
-        # Generate tasks using AI
+        # Generate 15 tasks using AI
         try:
             ai_generator = AITaskGenerator()
-            tasks_data = ai_generator.generate_tasks_from_text(file_info['extracted_text'])
+            tasks_data = ai_generator.generate_tasks_from_text(file_info['extracted_text'], num_tasks=15)
             
             # Save tasks to database
             TaskConverter.save_tasks_to_database(worksheet.id, tasks_data)
@@ -121,9 +121,9 @@ def api_upload_file():
         db.session.add(worksheet)
         db.session.commit()
         
-        # Generate tasks using AI
+        # Generate 15 tasks using AI
         ai_generator = AITaskGenerator()
-        tasks_data = ai_generator.generate_tasks_from_text(file_info['extracted_text'])
+        tasks_data = ai_generator.generate_tasks_from_text(file_info['extracted_text'], num_tasks=15)
         
         # Save tasks to database
         TaskConverter.save_tasks_to_database(worksheet.id, tasks_data)

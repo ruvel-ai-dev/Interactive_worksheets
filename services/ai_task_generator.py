@@ -15,7 +15,7 @@ class AITaskGenerator:
         )
         self.cache_service = CacheService()
     
-    def generate_tasks_from_text(self, text, num_tasks=5):
+    def generate_tasks_from_text(self, text, num_tasks=15):
         """Generate interactive tasks from extracted text using OpenAI with caching"""
         try:
             logger.info(f"Generating {num_tasks} tasks from text (length: {len(text)} chars)")
@@ -45,7 +45,7 @@ class AITaskGenerator:
                     }
                 ],
                 response_format={"type": "json_object"},
-                max_tokens=2000,
+                max_tokens=4000,
                 temperature=0.7
             )
             
@@ -73,11 +73,20 @@ class AITaskGenerator:
         3. Use exact terms, names, numbers, and examples from the original content
         4. If the content contains exercises, problems, or examples, create tasks based on those specific items
         5. Make sure every question can only be answered by someone who has read this specific content
+        6. CREATE {num_tasks} QUESTIONS by varying question types and approaches - if content is limited, ask the same concepts in different formats (multiple choice, fill-blank, matching, short answer)
+        7. Distribute question types evenly: aim for roughly equal numbers of multiple_choice, fill_blank, short_answer, and drag_drop questions
 
         Content to analyze:
         {text}
 
-        Generate tasks in this exact JSON format:
+        STRATEGY FOR LIMITED CONTENT:
+        If the content is short or has limited concepts, create variations by:
+        - Converting the same fact into multiple question formats
+        - Asking about the same concept from different angles
+        - Using different phrasing for similar questions
+        - Creating both basic and more complex questions about the same material
+
+        Generate exactly {num_tasks} tasks in this exact JSON format:
         {{
             "tasks": [
                 {{
@@ -120,12 +129,14 @@ class AITaskGenerator:
         }}
 
         REQUIREMENTS:
+        - Must generate exactly {num_tasks} questions
         - Every question must reference specific information from the provided content
         - Use actual numbers, names, terms, examples, and facts from the content
         - Create realistic wrong answers for multiple choice that seem plausible but are incorrect
         - For fill-in-blank, use actual sentences or key phrases from the content
         - For drag-and-drop, use real relationships, categories, or matches found in the content
         - Ensure tasks test comprehension of the specific material, not general knowledge
+        - If content is limited, create variations of the same concepts using different question formats
         
         If the content contains math problems, science experiments, historical events, vocabulary terms, or specific procedures, make sure to create tasks directly testing those specific elements.
         """

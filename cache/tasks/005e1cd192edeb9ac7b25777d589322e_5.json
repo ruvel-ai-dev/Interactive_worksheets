@@ -1,0 +1,86 @@
+{
+  "text_hash": "005e1cd192edeb9ac7b25777d589322e",
+  "num_tasks": 5,
+  "tasks": [
+    {
+      "task_type": "multiple_choice",
+      "question": "What is the result of the addition problem 2+2 as provided in the content?",
+      "task_data": {
+        "options": [
+          "4",
+          "5",
+          "3",
+          "6"
+        ],
+        "correct_answer": 0,
+        "explanation": "According to the content, the sum of 2+2 is specifically listed as 4."
+      },
+      "order_index": 0
+    },
+    {
+      "task_type": "fill_blank",
+      "question": "Complete the following addition problem from the content: 5+__=9.",
+      "task_data": {
+        "correct_answers": [
+          "4"
+        ],
+        "case_sensitive": false,
+        "explanation": "This term appears specifically in the content when discussing single-digit addition problems."
+      },
+      "order_index": 1
+    },
+    {
+      "task_type": "short_answer",
+      "question": "Based on the content provided, explain the process of solving the addition problem 3+3.",
+      "task_data": {
+        "sample_answer": "To solve 3+3, you count up three more from three, which gives you 6.",
+        "key_points": [
+          "Start with the number 3",
+          "Add 3 more to the number 3",
+          "Result is 6"
+        ],
+        "max_length": 300
+      },
+      "order_index": 2
+    },
+    {
+      "task_type": "drag_drop",
+      "question": "Match the addition problems from the content with their correct sums.",
+      "task_data": {
+        "items": [
+          "7+3",
+          "5+4",
+          "8+4"
+        ],
+        "targets": [
+          "11",
+          "9",
+          "12"
+        ],
+        "correct_matches": {
+          "7+3": "10",
+          "5+4": "9",
+          "8+4": "12"
+        }
+      },
+      "order_index": 3
+    },
+    {
+      "task_type": "multiple_choice",
+      "question": "According to the content, what is the sum of 9+2?",
+      "task_data": {
+        "options": [
+          "11",
+          "12",
+          "10",
+          "13"
+        ],
+        "correct_answer": 0,
+        "explanation": "The content specifically provides the result of 9+2 as 11."
+      },
+      "order_index": 4
+    }
+  ],
+  "cached_at": "2025-07-06T11:05:59.320523",
+  "text_preview": "Find more educational worksheets at kiddoworksheets.com \nCopyright \u00a9 2021 - www.kiddoworksheets.com ..."
+}
