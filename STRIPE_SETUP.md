@@ -21,14 +21,14 @@
 3. Price: £7.99 GBP per month
 4. Copy the Price ID - this is your GBP price ID
 
-## Step 3: Update Your Application ✅ COMPLETED
+## Step 3: Update Your Application 
 
-Your application has been updated with the real price IDs:
+Application updated with the real price IDs:
 
 ```python
 PRICE_IDS = {
-    'usd': 'price_1RhpoFFZKlwGqeHH9SlgMiKE',  # USD $9.99/month
-    'gbp': 'price_1Rhpp3FZKlwGqeHHO5ka6yLi'   # GBP £7.99/month
+    'usd': 'price_1R...',  # USD $9.99/month
+    'gbp': 'price_1R...i'   # GBP £7.99/month
 }
 ```
 
