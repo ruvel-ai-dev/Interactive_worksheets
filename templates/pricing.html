@@ -7,6 +7,13 @@
     <div class="text-center mb-5">
         <h1 class="display-4 mb-3">Choose Your Plan</h1>
         <p class="lead text-muted">Transform your worksheets into interactive learning experiences</p>
+        
+        <!-- Currency Toggle -->
+        <div class="btn-group mt-3" role="group" aria-label="Currency selection">
+            <button type="button" class="btn btn-outline-secondary active" id="usd-btn" onclick="showCurrency('usd')">USD ($)</button>
+            <button type="button" class="btn btn-outline-secondary" id="gbp-btn" onclick="showCurrency('gbp')">GBP (£)</button>
+        </div>
+        <p class="text-muted small mt-2">Prices are equivalent at current exchange rates</p>
     </div>
 
     <div class="row justify-content-center">
@@ -57,7 +64,10 @@
                 <div class="card-body p-4">
                     <div class="text-center mb-4">
                         <h3 class="card-title">Premium</h3>
-                        <div class="display-4 mb-2">$9.99</div>
+                        <div class="price-container">
+                            <div class="display-4 mb-2 price-usd">$9.99</div>
+                            <div class="display-4 mb-2 price-gbp" style="display: none;">£7.99</div>
+                        </div>
                         <p class="text-muted">per month</p>
                     </div>
                     
@@ -89,7 +99,7 @@
                     </ul>
                     
                     <div class="d-grid mt-4">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#subscribeModal">
+                        <button type="button" class="btn btn-primary subscribe-btn" data-currency="usd" data-bs-toggle="modal" data-bs-target="#subscribeModal">
                             Subscribe Now
                         </button>
                     </div>
@@ -138,7 +148,7 @@
                 <h5 class="modal-title" id="subscribeModalLabel">Subscribe to Premium</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ url_for('subscription.subscribe') }}" method="POST">
+            <form action="{{ url_for('subscription.subscribe') }}" method="POST" id="subscribeForm">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email Address</label>
@@ -146,6 +156,8 @@
                                placeholder="Enter your email address">
                         <div class="form-text">We'll use this to create your account and send receipts.</div>
                     </div>
+                    
+                    <input type="hidden" id="currency" name="currency" value="usd">
                     
                     <div class="alert alert-info">
                         <i class="feather-info me-2"></i>
@@ -162,9 +174,37 @@
 </div>
 
 <script>
+let currentCurrency = 'usd';
+
+function showCurrency(currency) {
+    currentCurrency = currency;
+    
+    // Update button states
+    document.getElementById('usd-btn').classList.toggle('active', currency === 'usd');
+    document.getElementById('gbp-btn').classList.toggle('active', currency === 'gbp');
+    
+    // Show/hide prices
+    document.querySelectorAll('.price-usd').forEach(el => {
+        el.style.display = currency === 'usd' ? 'block' : 'none';
+    });
+    document.querySelectorAll('.price-gbp').forEach(el => {
+        el.style.display = currency === 'gbp' ? 'block' : 'none';
+    });
+    
+    // Update subscribe buttons
+    document.querySelectorAll('.subscribe-btn').forEach(btn => {
+        btn.setAttribute('data-currency', currency);
+    });
+}
+
 // Auto-focus email field when modal opens
-document.getElementById('subscribeModal').addEventListener('shown.bs.modal', function () {
+document.getElementById('subscribeModal').addEventListener('shown.bs.modal', function (event) {
     document.getElementById('email').focus();
+    
+    // Set currency in form
+    const button = event.relatedTarget;
+    const currency = button.getAttribute('data-currency') || currentCurrency;
+    document.getElementById('currency').value = currency;
 });
 </script>
 {% endblock %}

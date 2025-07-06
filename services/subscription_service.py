@@ -20,11 +20,20 @@ class SubscriptionService:
             domain = domains[0] if domains else 'localhost:5000'
         return domain
     
+    # Price IDs for different currencies (you'll need to create these in Stripe)
+    PRICE_IDS = {
+        'usd': 'price_1234567890_usd',  # Replace with your USD price ID
+        'gbp': 'price_1234567890_gbp'   # Replace with your GBP price ID
+    }
+    
     @staticmethod
-    def create_checkout_session(user_email, price_id="price_1234567890"):
+    def create_checkout_session(user_email, currency='usd'):
         """Create a Stripe checkout session for subscription"""
         try:
             domain = SubscriptionService.get_domain()
+            
+            # Get the appropriate price ID for the currency
+            price_id = SubscriptionService.PRICE_IDS.get(currency.lower(), SubscriptionService.PRICE_IDS['usd'])
             
             # Create or get customer
             customer = SubscriptionService.get_or_create_customer(user_email)
@@ -33,7 +42,7 @@ class SubscriptionService:
                 customer=customer.id,
                 line_items=[
                     {
-                        'price': price_id,  # You'll need to create this in Stripe dashboard
+                        'price': price_id,
                         'quantity': 1,
                     },
                 ],

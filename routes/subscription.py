@@ -18,15 +18,21 @@ def subscribe():
     """Create subscription checkout session"""
     try:
         email = request.form.get('email')
+        currency = request.form.get('currency', 'usd').lower()
+        
         if not email:
             flash('Email is required', 'error')
             return redirect(url_for('subscription.pricing'))
         
+        # Validate currency
+        if currency not in ['usd', 'gbp']:
+            currency = 'usd'
+        
         # Store email in session for later use
         session['user_email'] = email
         
-        # Create checkout session
-        checkout_session = SubscriptionService.create_checkout_session(email)
+        # Create checkout session with selected currency
+        checkout_session = SubscriptionService.create_checkout_session(email, currency)
         
         return redirect(checkout_session.url, code=303)
     
