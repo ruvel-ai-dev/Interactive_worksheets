@@ -20,10 +20,10 @@ class SubscriptionService:
             domain = domains[0] if domains else 'localhost:5000'
         return domain
     
-    # Price IDs for different currencies (you'll need to create these in Stripe)
+    # Price IDs for different currencies
     PRICE_IDS = {
-        'usd': 'price_1234567890_usd',  # Replace with your USD price ID
-        'gbp': 'price_1234567890_gbp'   # Replace with your GBP price ID
+        'usd': 'price_1RhpoFFZKlwGqeHH9SlgMiKE',  # USD $9.99/month
+        'gbp': 'price_1Rhpp3FZKlwGqeHHO5ka6yLi'   # GBP £7.99/month
     }
     
     @staticmethod

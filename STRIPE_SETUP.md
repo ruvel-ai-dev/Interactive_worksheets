@@ -21,14 +21,14 @@
 3. Price: £7.99 GBP per month
 4. Copy the Price ID - this is your GBP price ID
 
-## Step 3: Update Your Application
+## Step 3: Update Your Application ✅ COMPLETED
 
-Replace the placeholder price IDs in `services/subscription_service.py`:
+Your application has been updated with the real price IDs:
 
 ```python
 PRICE_IDS = {
-    'usd': 'price_YOUR_USD_PRICE_ID_HERE',
-    'gbp': 'price_YOUR_GBP_PRICE_ID_HERE'
+    'usd': 'price_1RhpoFFZKlwGqeHH9SlgMiKE',  # USD $9.99/month
+    'gbp': 'price_1Rhpp3FZKlwGqeHHO5ka6yLi'   # GBP £7.99/month
 }
 ```
 
