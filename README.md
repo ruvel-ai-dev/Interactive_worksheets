@@ -1,90 +1,99 @@
 # AI Worksheet Converter
 
-AI Worksheet Converter is a Flask web application that transforms traditional PDF or DOCX worksheets into interactive tasks using OpenAI's GPT‑4o model. It supports multiple task types, a subscription system powered by Stripe, and an email verification workflow to prevent misuse.
+An easy-to-use web app that transforms traditional educational worksheets into engaging, interactive tasks — ideal for homeschooling, tutoring, or classroom use.
 
-## Features
+---
 
-- **Upload Worksheets**: Accepts PDF, DOCX, and DOC files up to 16MB.
-- **AI Task Generation**: Extracts text and generates multiple choice, fill‑in‑the‑blank, short answer, and drag‑and‑drop activities.
-- **Usage Limits & Subscriptions**: Free tier allows three worksheets; premium users get unlimited conversions via Stripe payments (USD or GBP).
-- **Email Verification**: Users verify their email before processing worksheets to curb fake sign‑ups.
-- **Caching Layer**: Recently generated tasks are cached on disk to speed up repeat requests.
-- **Simple UI**: Responsive Bootstrap templates with JavaScript enhancements for checking answers and tracking progress.
+## 🌟 What It Does
 
-## Getting Started
+Upload a PDF or Word worksheet and watch it turn into live interactive tasks in seconds. No coding, no manual formatting — just smarter worksheets powered by GPT-4.
 
-### Requirements
+- Converts **PDF, DOCX, and DOC** files
+- Automatically generates **multiple-choice, fill-in-the-blank, drag-and-drop** questions
+- View and manage all uploads from a single dashboard
+- Built-in **free plan** with 3 trial conversions
+- Upgrade for **unlimited conversions** and premium features
 
-- Python 3.11+
-- A virtual environment (recommended)
-- OpenAI and Stripe accounts
+---
 
-### Installation
+## 💻 App Overview
 
-1. **Clone the repository**
+### 🔹 Upload Page
 
-   ```bash
-   git clone https://github.com/yourname/ai-worksheet-converter.git
-   cd ai-worksheet-converter
-   ```
+Upload worksheets, enter your email, and hit **Generate Interactive Tasks**.
 
-2. **Install dependencies**
+![Main Interface](Main%20Interface.jpg)
 
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate
-   pip install -r requirements.txt  # or `uv pip install -r uv.lock`
-   ```
+---
 
-3. **Configure environment variables**
+### 🔹 Pricing Plans
 
-   Create a `.env` file or export the following variables:
+Simple pricing with a generous free tier and affordable monthly upgrade.
 
-   ```bash
-   OPENAI_API_KEY=your-openai-key
-   STRIPE_SECRET_KEY=your-stripe-key
-   SESSION_SECRET=change-this-secret
-   DATABASE_URL=sqlite:///worksheet_converter.db  # or your PostgreSQL URL
+![Pricing](Pricing.jpg)
 
-   # Optional (for email verification)
-   MAIL_SERVER=smtp.gmail.com
-   MAIL_PORT=587
-   MAIL_USE_TLS=true
-   MAIL_USERNAME=you@example.com
-   MAIL_PASSWORD=app-password
-   MAIL_DEFAULT_SENDER=noreply@example.com
-   ```
+---
 
-### Running the Application
+### 🔹 My Worksheets Dashboard
 
-Start the Flask app with:
+All uploaded worksheets are stored here, with task generation status and access to view completed tasks.
+
+![Stored Worksheets](Stored%20Worksheets.jpg)
+
+---
+
+### 🔹 Subscription Management
+
+Track your usage, membership tier, and upgrade easily when needed.
+
+![Accounts Page](Accounts%20Page.jpg)
+
+---
+
+### 🔹 Contact Form
+
+Have a question? Reach out via the built-in contact form.
+
+![Contact Page](Contact%20Page.jpg)
+
+---
+
+## ⚙️ How It Works
+
+1. **Upload** your worksheet (PDF, DOCX, or DOC)
+2. **AI Analyses** and extracts key educational content
+3. **Tasks Are Generated** — multiple choice, drag-and-drop, fill-in-the-blank
+4. **Interact Online** — perfect for digital classrooms
+
+---
+
+## 🚀 Getting Started (For Devs)
+
+To run this locally or modify it:
 
 ```bash
-python main.py
+git clone https://github.com/ruvel-ai-dev/Interactive_worksheets.git
 ```
 
-Visit `http://localhost:5000` in your browser to upload a worksheet. After uploading and verifying your email, the app generates interactive tasks that can be completed directly in the browser.
+Then follow the setup guide inside the project directory.
 
-## Project Structure
+---
 
-```
-app.py                 # Application factory and configuration
-main.py                # Entry point used by gunicorn or Flask
-models.py              # SQLAlchemy models
-routes/                # Blueprint route handlers
-services/              # Business logic (AI generation, file processing, etc.)
-templates/             # Jinja2 templates
-static/                # CSS and JS assets
-uploads/               # Uploaded files (gitignored)
-cache/                 # Cached tasks (gitignored)
-```
+## 🔧 Tech Stack
 
-Additional documentation:
+- **GPT-4** via OpenAI for intelligent content parsing
+- **Flask** backend with interactive front-end features
+- File upload and task storage handled within the app
 
-- `DEPLOYMENT_GUIDE.md` – steps for deploying to Replit with a custom domain.
-- `STRIPE_SETUP.md` – instructions for configuring Stripe pricing.
-- `EMAIL_SETUP.md` – configuring email verification.
-- `SECURITY_CHECKLIST.md` – overview of security considerations.
+---
 
-## License
-This project is provided under the MIT License.
+## 🧾 License
+
+This project is licensed under the MIT License.
+
+---
+
+## ✉️ Contact
+
+Made by Ruvel Miah  
+For issues, feedback, or collaboration, feel free to open an issue or get in touch via GitHub.
