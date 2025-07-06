@@ -1,0 +1,15 @@
+Simple Addition Practice
+
+Learn to add single-digit numbers.
+
+1 + 2 = 3
+2 + 3 = 5
+4 + 1 = 5
+3 + 3 = 6
+
+Practice Problems:
+- What is 2 + 4?
+- Calculate 1 + 5
+- Find the sum of 3 + 2
+
+Addition helps us combine numbers together to find the total amount.
