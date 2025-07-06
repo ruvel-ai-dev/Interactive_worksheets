@@ -84,6 +84,7 @@ Database configuration supports both SQLite (development) and PostgreSQL (produc
 - July 06, 2025: Significantly improved AI task generation to create content-specific questions based on actual worksheet material rather than generic questions
 - July 06, 2025: Added complete subscription system with Stripe integration, usage limits, and premium features
 - July 06, 2025: Added multi-currency support (USD $9.99, GBP £7.99) with dynamic pricing page
+- July 06, 2025: Added professional contact form with email forwarding to ruvel.ai.dev@gmail.com (email not exposed to users)
 
 ## User Preferences
 

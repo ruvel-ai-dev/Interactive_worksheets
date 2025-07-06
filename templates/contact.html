@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - AI Worksheet Converter{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="text-center mb-5">
+                <h1 class="display-5 mb-3">Contact Us</h1>
+                <p class="lead text-muted">Have a question or need help? We'd love to hear from you!</p>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <form action="{{ url_for('contact.send_contact') }}" method="POST">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required 
+                                   placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" required 
+                                   placeholder="Enter your email address">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <select class="form-select" id="subject" name="subject" required>
+                                <option value="">Choose a subject...</option>
+                                <option value="General Question">General Question</option>
+                                <option value="Technical Support">Technical Support</option>
+                                <option value="Billing & Subscription">Billing & Subscription</option>
+                                <option value="Feature Request">Feature Request</option>
+                                <option value="Bug Report">Bug Report</option>
+                                <option value="Partnership Inquiry">Partnership Inquiry</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" required 
+                                      placeholder="Please describe your question or issue in detail..."></textarea>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="feather-send me-2"></i>
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="row mt-5">
+                <div class="col-md-6 text-center mb-4">
+                    <div class="mb-3">
+                        <i class="feather-clock text-primary" style="font-size: 2rem;"></i>
+                    </div>
+                    <h5>Response Time</h5>
+                    <p class="text-muted">We typically respond within 24 hours</p>
+                </div>
+                <div class="col-md-6 text-center mb-4">
+                    <div class="mb-3">
+                        <i class="feather-help-circle text-primary" style="font-size: 2rem;"></i>
+                    </div>
+                    <h5>Get Help</h5>
+                    <p class="text-muted">Check our <a href="#">FAQ</a> for quick answers</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,6 +2,7 @@ import os
 import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
 from sqlalchemy.orm import DeclarativeBase
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -23,6 +24,15 @@ def create_app():
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
     app.config['UPLOAD_FOLDER'] = 'uploads'
     
+    # Configure Flask-Mail
+    app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
+    app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
+    app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS', 'true').lower() in ['true', 'on', '1']
+    app.config['MAIL_USE_SSL'] = os.environ.get('MAIL_USE_SSL', 'false').lower() in ['true', 'on', '1']
+    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+    app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', 'noreply@worksheetconverter.com')
+    
     # Configure the database
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///worksheet_converter.db")
     app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
@@ -30,8 +40,9 @@ def create_app():
         "pool_pre_ping": True,
     }
     
-    # Initialize the app with the extension
+    # Initialize the app with the extensions
     db.init_app(app)
+    mail = Mail(app)
     
     # Create uploads directory if it doesn't exist
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -45,10 +56,12 @@ def create_app():
         from routes.upload import upload_bp
         from routes.tasks import tasks_bp
         from routes.subscription import subscription_bp
+        from routes.contact import contact_bp
         
         app.register_blueprint(upload_bp)
         app.register_blueprint(tasks_bp)
         app.register_blueprint(subscription_bp, url_prefix='/subscription')
+        app.register_blueprint(contact_bp)
         
         # Main route
         @app.route('/')
