@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Worksheets - AI Worksheet Converter{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h3 mb-1">
+                    <i data-feather="folder" class="me-2"></i>
+                    My Worksheets
+                </h1>
+                <p class="text-muted mb-0">Manage your uploaded worksheets and generated tasks</p>
+            </div>
+            <div>
+                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    <i data-feather="plus" class="me-1"></i>
+                    Upload New Worksheet
+                </a>
+            </div>
+        </div>
+
+        <!-- Worksheets List -->
+        {% if worksheets %}
+            <div class="row">
+                {% for worksheet in worksheets %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div class="file-icon">
+                                        {% if worksheet.file_type == 'pdf' %}
+                                            <i data-feather="file-text" class="text-danger" style="width: 32px; height: 32px;"></i>
+                                        {% else %}
+                                            <i data-feather="file" class="text-primary" style="width: 32px; height: 32px;"></i>
+                                        {% endif %}
+                                    </div>
+                                    <span class="badge bg-{{ 'success' if worksheet.processing_status == 'completed' else 'warning' if worksheet.processing_status == 'processing' else 'danger' }}">
+                                        {{ worksheet.processing_status.title() }}
+                                    </span>
+                                </div>
+                                
+                                <h6 class="card-title text-truncate" title="{{ worksheet.original_filename }}">
+                                    {{ worksheet.original_filename }}
+                                </h6>
+                                
+                                <div class="card-text text-muted small mb-3">
+                                    <div class="mb-1">
+                                        <i data-feather="calendar" class="me-1" style="width: 14px; height: 14px;"></i>
+                                        {{ worksheet.upload_date.strftime('%Y-%m-%d %H:%M') }}
+                                    </div>
+                                    <div class="mb-1">
+                                        <i data-feather="tag" class="me-1" style="width: 14px; height: 14px;"></i>
+                                        {{ worksheet.file_type.upper() }}
+                                    </div>
+                                    <div>
+                                        <i data-feather="hash" class="me-1" style="width: 14px; height: 14px;"></i>
+                                        {{ worksheet.tasks|length }} tasks
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-footer bg-transparent">
+                                {% if worksheet.processing_status == 'completed' %}
+                                    <a href="{{ url_for('tasks.view_tasks', worksheet_id=worksheet.id) }}" 
+                                       class="btn btn-primary btn-sm w-100">
+                                        <i data-feather="play" class="me-1"></i>
+                                        View Tasks
+                                    </a>
+                                {% elif worksheet.processing_status == 'processing' %}
+                                    <button class="btn btn-warning btn-sm w-100" disabled>
+                                        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                        Processing...
+                                    </button>
+                                {% else %}
+                                    <button class="btn btn-danger btn-sm w-100" disabled>
+                                        <i data-feather="alert-circle" class="me-1"></i>
+                                        Processing Failed
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-5">
+                <div class="mb-4">
+                    <i data-feather="inbox" class="text-muted" style="width: 64px; height: 64px;"></i>
+                </div>
+                <h4 class="text-muted">No Worksheets Yet</h4>
+                <p class="text-muted mb-4">Upload your first worksheet to get started with AI-powered task generation.</p>
+                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    <i data-feather="upload" class="me-1"></i>
+                    Upload Worksheet
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

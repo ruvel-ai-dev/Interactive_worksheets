@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}AI Worksheet Converter - Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <!-- Hero Section -->
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold mb-3">
+                <i data-feather="zap" class="text-warning"></i>
+                AI Worksheet Converter
+            </h1>
+            <p class="lead text-muted">
+                Transform your educational worksheets into interactive learning experiences using the power of AI.
+            </p>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title mb-0">
+                    <i data-feather="upload-cloud" class="me-2"></i>
+                    Upload Your Worksheet
+                </h3>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('upload.upload_file') }}" method="post" enctype="multipart/form-data" id="uploadForm">
+                    <div class="mb-4">
+                        <label for="file" class="form-label">
+                            <i data-feather="file" class="me-2"></i>
+                            Select Worksheet File
+                        </label>
+                        <input type="file" class="form-control form-control-lg" id="file" name="file" 
+                               accept=".pdf,.docx,.doc" required>
+                        <div class="form-text">
+                            Supported formats: PDF, DOCX, DOC (Max size: 16MB)
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg" id="uploadBtn">
+                            <i data-feather="zap" class="me-2"></i>
+                            Generate Interactive Tasks
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="row mt-5">
+            <div class="col-md-4 text-center mb-4">
+                <div class="feature-icon mb-3">
+                    <i data-feather="file-text" class="text-info" style="width: 48px; height: 48px;"></i>
+                </div>
+                <h5>Multiple Formats</h5>
+                <p class="text-muted">Upload PDF or DOCX worksheets and let AI extract the content automatically.</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <div class="feature-icon mb-3">
+                    <i data-feather="cpu" class="text-success" style="width: 48px; height: 48px;"></i>
+                </div>
+                <h5>AI-Powered</h5>
+                <p class="text-muted">Uses advanced GPT-4 to understand content and generate appropriate tasks.</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <div class="feature-icon mb-3">
+                    <i data-feather="mouse-pointer" class="text-warning" style="width: 48px; height: 48px;"></i>
+                </div>
+                <h5>Interactive Tasks</h5>
+                <p class="text-muted">Creates multiple-choice, fill-in-the-blank, and drag-and-drop activities.</p>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4 class="card-title mb-0">
+                    <i data-feather="help-circle" class="me-2"></i>
+                    How It Works
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 text-center mb-3">
+                        <div class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px;">1</div>
+                        <h6>Upload</h6>
+                        <p class="text-muted small">Upload your worksheet file</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-3">
+                        <div class="step-number bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px;">2</div>
+                        <h6>Extract</h6>
+                        <p class="text-muted small">AI extracts and analyzes content</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-3">
+                        <div class="step-number bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px;">3</div>
+                        <h6>Generate</h6>
+                        <p class="text-muted small">Creates interactive tasks</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-3">
+                        <div class="step-number bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px;">4</div>
+                        <h6>Interact</h6>
+                        <p class="text-muted small">Students engage with tasks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        const btn = document.getElementById('uploadBtn');
+        const fileInput = document.getElementById('file');
+        
+        if (!fileInput.files.length) {
+            e.preventDefault();
+            alert('Please select a file to upload.');
+            return;
+        }
+        
+        // Show loading state
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Processing...';
+        btn.disabled = true;
+    });
+    
+    // File validation
+    document.getElementById('file').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const maxSize = 16 * 1024 * 1024; // 16MB
+            const allowedTypes = ['.pdf', '.docx', '.doc'];
+            const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+            
+            if (file.size > maxSize) {
+                alert('File size exceeds 16MB limit.');
+                e.target.value = '';
+                return;
+            }
+            
+            if (!allowedTypes.includes(fileExtension)) {
+                alert('Please select a PDF or DOCX file.');
+                e.target.value = '';
+                return;
+            }
+        }
+    });
+</script>
+{% endblock %}

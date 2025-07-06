@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}Interactive Tasks - {{ worksheet.original_filename }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h3 mb-1">
+                    <i data-feather="clipboard" class="me-2"></i>
+                    Interactive Tasks
+                </h1>
+                <p class="text-muted mb-0">
+                    <i data-feather="file" class="me-1"></i>
+                    {{ worksheet.original_filename }}
+                    <span class="badge bg-{{ 'success' if worksheet.processing_status == 'completed' else 'warning' }} ms-2">
+                        {{ worksheet.processing_status.title() }}
+                    </span>
+                </p>
+            </div>
+            <div>
+                <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+                    <i data-feather="arrow-left" class="me-1"></i>
+                    Back to Upload
+                </a>
+            </div>
+        </div>
+
+        <!-- Tasks -->
+        <div id="tasksContainer">
+            {% for task in tasks %}
+                <div class="card mb-4 task-card" data-task-id="{{ task.id }}">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            <span class="badge bg-info me-2">{{ loop.index }}</span>
+                            {% if task.task_type == 'multiple_choice' %}
+                                <i data-feather="check-circle" class="me-1"></i>
+                                Multiple Choice
+                            {% elif task.task_type == 'fill_blank' %}
+                                <i data-feather="edit" class="me-1"></i>
+                                Fill in the Blank
+                            {% elif task.task_type == 'short_answer' %}
+                                <i data-feather="message-square" class="me-1"></i>
+                                Short Answer
+                            {% elif task.task_type == 'drag_drop' %}
+                                <i data-feather="move" class="me-1"></i>
+                                Drag & Drop
+                            {% endif %}
+                        </h5>
+                        <span class="badge bg-secondary">{{ task.task_type.replace('_', ' ').title() }}</span>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="question mb-3">
+                            <h6 class="fw-bold">{{ task.question }}</h6>
+                        </div>
+                        
+                        <div class="task-content">
+                            {% if task.task_type == 'multiple_choice' %}
+                                <!-- Multiple Choice Task -->
+                                <div class="multiple-choice-options">
+                                    {% for option in task.task_data.options %}
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="task_{{ task.id }}" 
+                                                   id="task_{{ task.id }}_option_{{ loop.index0 }}" 
+                                                   value="{{ loop.index0 }}">
+                                            <label class="form-check-label" for="task_{{ task.id }}_option_{{ loop.index0 }}">
+                                                {{ option }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                
+                            {% elif task.task_type == 'fill_blank' %}
+                                <!-- Fill in the Blank Task -->
+                                <div class="fill-blank-input">
+                                    <input type="text" class="form-control" 
+                                           placeholder="Enter your answer here..." 
+                                           id="task_{{ task.id }}_answer">
+                                </div>
+                                
+                            {% elif task.task_type == 'short_answer' %}
+                                <!-- Short Answer Task -->
+                                <div class="short-answer-input">
+                                    <textarea class="form-control" rows="4" 
+                                              placeholder="Enter your answer here..." 
+                                              id="task_{{ task.id }}_answer"
+                                              maxlength="{{ task.task_data.max_length or 500 }}"></textarea>
+                                    <div class="form-text">
+                                        Maximum {{ task.task_data.max_length or 500 }} characters
+                                    </div>
+                                </div>
+                                
+                            {% elif task.task_type == 'drag_drop' %}
+                                <!-- Drag and Drop Task -->
+                                <div class="drag-drop-container">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Items to Match:</h6>
+                                            <div class="draggable-items" id="task_{{ task.id }}_items">
+                                                {% for item in task.task_data.items %}
+                                                    <div class="draggable-item badge bg-primary me-2 mb-2 p-2" 
+                                                         draggable="true" data-item="{{ item }}">
+                                                        {{ item }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Drop Targets:</h6>
+                                            <div class="drop-targets" id="task_{{ task.id }}_targets">
+                                                {% for target in task.task_data.targets %}
+                                                    <div class="drop-target border rounded p-3 mb-2" 
+                                                         data-target="{{ target }}">
+                                                        <div class="target-label">{{ target }}</div>
+                                                        <div class="dropped-item"></div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="task-actions mt-3">
+                            <button class="btn btn-primary check-answer-btn" data-task-id="{{ task.id }}">
+                                <i data-feather="check" class="me-1"></i>
+                                Check Answer
+                            </button>
+                            <button class="btn btn-outline-secondary reset-btn" data-task-id="{{ task.id }}">
+                                <i data-feather="refresh-cw" class="me-1"></i>
+                                Reset
+                            </button>
+                        </div>
+                        
+                        <div class="task-feedback mt-3" id="feedback_{{ task.id }}" style="display: none;">
+                            <!-- Feedback will be shown here -->
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Progress Summary -->
+        <div class="card mt-4">
+            <div class="card-body text-center">
+                <h5>Progress Summary</h5>
+                <div class="progress mb-3">
+                    <div class="progress-bar" role="progressbar" style="width: 0%" id="progressBar"></div>
+                </div>
+                <p class="text-muted mb-0">
+                    <span id="completedTasks">0</span> of {{ tasks|length }} tasks completed
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/tasks.js') }}"></script>
+<script>
+    // Initialize tasks with data
+    const tasksData = {{ tasks|tojson|safe }};
+    TaskManager.init(tasksData);
+</script>
+{% endblock %}

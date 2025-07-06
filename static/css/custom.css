@@ -1,0 +1,249 @@
+/* Custom styles for AI Worksheet Converter */
+
+:root {
+    --task-border-radius: 8px;
+    --task-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --success-color: #22c55e;
+    --error-color: #ef4444;
+    --warning-color: #f59e0b;
+}
+
+/* Task Cards */
+.task-card {
+    border-radius: var(--task-border-radius);
+    box-shadow: var(--task-shadow);
+    transition: all 0.3s ease;
+}
+
+.task-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.task-card.correct {
+    border-left: 4px solid var(--success-color);
+}
+
+.task-card.incorrect {
+    border-left: 4px solid var(--error-color);
+}
+
+/* Multiple Choice Options */
+.multiple-choice-options .form-check {
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.multiple-choice-options .form-check:hover {
+    background-color: var(--bs-gray-100);
+}
+
+.multiple-choice-options .form-check-input:checked ~ .form-check-label {
+    font-weight: 500;
+}
+
+/* Fill in the Blank */
+.fill-blank-input input {
+    border: 2px solid var(--bs-border-color);
+    border-radius: 4px;
+    transition: border-color 0.2s ease;
+}
+
+.fill-blank-input input:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Short Answer */
+.short-answer-input textarea {
+    border: 2px solid var(--bs-border-color);
+    border-radius: 4px;
+    transition: border-color 0.2s ease;
+    resize: vertical;
+}
+
+.short-answer-input textarea:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Drag and Drop */
+.drag-drop-container {
+    min-height: 200px;
+}
+
+.draggable-item {
+    cursor: move;
+    user-select: none;
+    transition: transform 0.2s ease;
+}
+
+.draggable-item:hover {
+    transform: scale(1.05);
+}
+
+.draggable-item.dragging {
+    opacity: 0.5;
+}
+
+.drop-target {
+    min-height: 60px;
+    border: 2px dashed var(--bs-border-color);
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.drop-target.drag-over {
+    border-color: var(--bs-primary);
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+.drop-target .target-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.drop-target .dropped-item {
+    min-height: 30px;
+}
+
+/* Feedback Styles */
+.task-feedback {
+    border-radius: 4px;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.task-feedback.correct {
+    background-color: rgba(34, 197, 94, 0.1);
+    border: 1px solid var(--success-color);
+    color: var(--success-color);
+}
+
+.task-feedback.incorrect {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--error-color);
+    color: var(--error-color);
+}
+
+/* Progress Bar */
+.progress {
+    height: 8px;
+    border-radius: 4px;
+}
+
+.progress-bar {
+    transition: width 0.3s ease;
+}
+
+/* Button Styles */
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Feature Icons */
+.feature-icon {
+    display: inline-block;
+    padding: 1rem;
+    border-radius: 50%;
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+/* Step Numbers */
+.step-number {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* File Upload */
+.form-control:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Worksheet Cards */
+.card {
+    border-radius: var(--task-border-radius);
+    box-shadow: var(--task-shadow);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Loading States */
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .task-card {
+        margin-bottom: 1rem;
+    }
+    
+    .drag-drop-container .row {
+        flex-direction: column;
+    }
+    
+    .drag-drop-container .col-md-6 {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Dark Theme Adjustments */
+[data-bs-theme="dark"] .multiple-choice-options .form-check:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-bs-theme="dark"] .drop-target.drag-over {
+    background-color: rgba(13, 110, 253, 0.2);
+}
+
+[data-bs-theme="dark"] .feature-icon {
+    background-color: rgba(13, 110, 253, 0.2);
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
