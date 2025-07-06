@@ -63,6 +63,18 @@ def create_app():
         app.register_blueprint(subscription_bp, url_prefix='/subscription')
         app.register_blueprint(contact_bp)
         
+        # Error handlers
+        @app.errorhandler(404)
+        def not_found_error(error):
+            from flask import render_template
+            return render_template('errors/404.html'), 404
+        
+        @app.errorhandler(500)
+        def internal_error(error):
+            from flask import render_template
+            db.session.rollback()
+            return render_template('errors/500.html'), 500
+        
         # Main route
         @app.route('/')
         def index():

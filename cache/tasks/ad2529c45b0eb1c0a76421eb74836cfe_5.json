@@ -1,0 +1,20 @@
+{
+  "text_hash": "ad2529c45b0eb1c0a76421eb74836cfe",
+  "num_tasks": 5,
+  "tasks": [
+    {
+      "task_type": "multiple_choice",
+      "question": "Test question",
+      "task_data": {
+        "options": [
+          "A",
+          "B",
+          "C"
+        ],
+        "correct": 0
+      }
+    }
+  ],
+  "cached_at": "2025-07-06T10:50:50.499077",
+  "text_preview": "Sample worksheet content for testing"
+}

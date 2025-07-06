@@ -2,6 +2,7 @@ import json
 import os
 import logging
 from openai import OpenAI
+from .cache_service import CacheService
 
 logger = logging.getLogger(__name__)
 
@@ -12,10 +13,19 @@ class AITaskGenerator:
         self.openai_client = OpenAI(
             api_key=os.environ.get("OPENAI_API_KEY", "your-openai-api-key-here")
         )
+        self.cache_service = CacheService()
     
     def generate_tasks_from_text(self, text, num_tasks=5):
-        """Generate interactive tasks from extracted text using OpenAI"""
+        """Generate interactive tasks from extracted text using OpenAI with caching"""
         try:
+            logger.info(f"Generating {num_tasks} tasks from text (length: {len(text)} chars)")
+            
+            # Check cache first
+            cached_tasks = self.cache_service.get_cached_tasks(text, num_tasks)
+            if cached_tasks:
+                logger.info(f"Using {len(cached_tasks)} cached tasks")
+                return cached_tasks
+            
             prompt = self._create_task_generation_prompt(text, num_tasks)
             
             # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
@@ -40,7 +50,13 @@ class AITaskGenerator:
             )
             
             result = json.loads(response.choices[0].message.content)
-            return self._validate_and_format_tasks(result)
+            tasks = self._validate_and_format_tasks(result)
+            
+            # Cache the generated tasks
+            self.cache_service.cache_tasks(text, tasks, num_tasks)
+            
+            logger.info(f"Successfully generated and cached {len(tasks)} tasks")
+            return tasks
             
         except Exception as e:
             logger.error(f"Error generating tasks with OpenAI: {str(e)}")
