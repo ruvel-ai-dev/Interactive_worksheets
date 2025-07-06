@@ -75,7 +75,9 @@ Database configuration supports both SQLite (development) and PostgreSQL (produc
 
 ## Changelog
 
-- July 06, 2025. Initial setup
+- July 06, 2025: Initial setup and core functionality
+- July 06, 2025: Fixed template rendering issues with dictionary key access 
+- July 06, 2025: Significantly improved AI task generation to create content-specific questions based on actual worksheet material rather than generic questions
 
 ## User Preferences
 

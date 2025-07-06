@@ -49,60 +49,69 @@ class AITaskGenerator:
     def _create_task_generation_prompt(self, text, num_tasks):
         """Create a detailed prompt for task generation"""
         return f"""
-        Based on the following educational content, generate {num_tasks} interactive learning tasks.
-        
-        Content:
+        You are an expert educational content creator. Carefully analyze the following educational content and create {num_tasks} interactive learning tasks that are DIRECTLY based on the specific information, facts, concepts, examples, and details provided in the content.
+
+        IMPORTANT INSTRUCTIONS:
+        1. Read the content thoroughly and identify specific facts, concepts, examples, numbers, processes, and details
+        2. Create questions that test understanding of the ACTUAL content provided, not generic knowledge
+        3. Use exact terms, names, numbers, and examples from the original content
+        4. If the content contains exercises, problems, or examples, create tasks based on those specific items
+        5. Make sure every question can only be answered by someone who has read this specific content
+
+        Content to analyze:
         {text}
-        
-        Generate tasks in the following JSON format:
+
+        Generate tasks in this exact JSON format:
         {{
             "tasks": [
                 {{
                     "task_type": "multiple_choice",
-                    "question": "What is the main concept discussed?",
+                    "question": "Based on the content, [specific question about actual content]",
                     "task_data": {{
-                        "options": ["Option A", "Option B", "Option C", "Option D"],
+                        "options": ["[correct answer from content]", "[plausible wrong answer]", "[plausible wrong answer]", "[plausible wrong answer]"],
                         "correct_answer": 0,
-                        "explanation": "Brief explanation of the correct answer"
+                        "explanation": "According to the content, [explanation citing specific details]"
                     }}
                 }},
                 {{
                     "task_type": "fill_blank",
-                    "question": "Complete the sentence: The main idea is ___.",
+                    "question": "[Use actual sentences or concepts from the content with blanks]: ___.",
                     "task_data": {{
-                        "correct_answers": ["answer1", "answer2"],
+                        "correct_answers": ["[exact term/phrase from content]"],
                         "case_sensitive": false,
-                        "explanation": "Brief explanation"
+                        "explanation": "This term appears specifically in the content when discussing [specific context]"
                     }}
                 }},
                 {{
                     "task_type": "short_answer",
-                    "question": "Explain the concept in your own words.",
+                    "question": "Based on the content provided, explain [specific concept/process mentioned in the content].",
                     "task_data": {{
-                        "sample_answer": "Sample answer for reference",
-                        "key_points": ["point1", "point2"],
-                        "max_length": 200
+                        "sample_answer": "[Answer using information directly from the content]",
+                        "key_points": ["[specific point 1 from content]", "[specific point 2 from content]"],
+                        "max_length": 300
                     }}
                 }},
                 {{
                     "task_type": "drag_drop",
-                    "question": "Match the terms with their definitions.",
+                    "question": "Match the [specific items mentioned in content] with their [corresponding information from content].",
                     "task_data": {{
-                        "items": ["Term 1", "Term 2"],
-                        "targets": ["Definition 1", "Definition 2"],
-                        "correct_matches": {{"Term 1": "Definition 1", "Term 2": "Definition 2"}}
+                        "items": ["[actual item 1 from content]", "[actual item 2 from content]"],
+                        "targets": ["[corresponding info 1 from content]", "[corresponding info 2 from content]"],
+                        "correct_matches": {{"[actual item 1]": "[corresponding info 1]", "[actual item 2]": "[corresponding info 2]"}}
                     }}
                 }}
             ]
         }}
+
+        REQUIREMENTS:
+        - Every question must reference specific information from the provided content
+        - Use actual numbers, names, terms, examples, and facts from the content
+        - Create realistic wrong answers for multiple choice that seem plausible but are incorrect
+        - For fill-in-blank, use actual sentences or key phrases from the content
+        - For drag-and-drop, use real relationships, categories, or matches found in the content
+        - Ensure tasks test comprehension of the specific material, not general knowledge
         
-        Task types to use:
-        - multiple_choice: 4 options, 1 correct answer
-        - fill_blank: Fill in the blank questions
-        - short_answer: Open-ended questions
-        - drag_drop: Matching exercises
-        
-        Make sure all tasks are educational, relevant to the content, and appropriately challenging.
+        If the content contains math problems, science experiments, historical events, vocabulary terms, or specific procedures, make sure to create tasks directly testing those specific elements.
         """
     
     def _validate_and_format_tasks(self, ai_response):
