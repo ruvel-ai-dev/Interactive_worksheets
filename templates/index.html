@@ -35,19 +35,6 @@
             <div class="card-body">
                 <form action="{{ url_for('upload.upload_file') }}" method="post" enctype="multipart/form-data" id="uploadForm">
                     <div class="mb-4">
-                        <label for="email" class="form-label">
-                            <i data-feather="mail" class="me-2"></i>
-                            Your Email Address
-                        </label>
-                        <input type="email" class="form-control" id="email" name="email" required 
-                               placeholder="ruvel.ai.dev@gmail.com" 
-                               value="{{ session.get('user_email', '') }}">
-                        <div class="form-text">
-                            We'll use this to track your usage and send you updates (Free: 3 worksheets)
-                        </div>
-                    </div>
-                    
-                    <div class="mb-4">
                         <label for="file" class="form-label">
                             <i data-feather="file" class="me-2"></i>
                             Select Worksheet File
@@ -56,6 +43,19 @@
                                accept=".pdf,.docx,.doc" required>
                         <div class="form-text">
                             Supported formats: PDF, DOCX, DOC (Max size: 16MB)
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="email" class="form-label">
+                            <i data-feather="mail" class="me-2"></i>
+                            Your Email Address
+                        </label>
+                        <input type="email" class="form-control" id="email" name="email" required 
+                               placeholder="Enter your email address" 
+                               value="{{ session.get('user_email', '') }}">
+                        <div class="form-text">
+                            We'll use this to track your usage and send you updates (Free: 3 worksheets)
                         </div>
                     </div>
                     
