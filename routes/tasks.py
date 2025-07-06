@@ -15,15 +15,16 @@ def view_tasks(worksheet_id):
         worksheet = Worksheet.query.get_or_404(worksheet_id)
         
         # Get tasks for this worksheet
-        tasks = TaskConverter.get_tasks_for_worksheet(worksheet_id)
+        tasks_data = TaskConverter.get_tasks_for_worksheet(worksheet_id)
         
-        if not tasks:
+        if not tasks_data:
             flash('No tasks found for this worksheet', 'warning')
             return redirect(url_for('index'))
         
+        logger.info(f"Rendering template with {len(tasks_data)} tasks")
         return render_template('tasks.html', 
                              worksheet=worksheet, 
-                             tasks=tasks)
+                             tasks=tasks_data)
         
     except Exception as e:
         logger.error(f"Error viewing tasks: {str(e)}")

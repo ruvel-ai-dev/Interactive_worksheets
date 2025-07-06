@@ -39,7 +39,18 @@ class TaskConverter:
         """Retrieve all tasks for a specific worksheet"""
         try:
             tasks = Task.query.filter_by(worksheet_id=worksheet_id).order_by(Task.order_index).all()
-            return [task.to_dict() for task in tasks]
+            logger.info(f"Found {len(tasks)} tasks for worksheet {worksheet_id}")
+            
+            result = []
+            for task in tasks:
+                try:
+                    task_dict = task.to_dict()
+                    result.append(task_dict)
+                except Exception as e:
+                    logger.error(f"Error converting task {task.id} to dict: {str(e)}")
+                    continue
+            
+            return result
         except Exception as e:
             logger.error(f"Error retrieving tasks: {str(e)}")
             raise Exception(f"Failed to retrieve tasks: {str(e)}")
