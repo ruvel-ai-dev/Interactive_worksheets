@@ -44,9 +44,11 @@ def create_app():
         # Register blueprints
         from routes.upload import upload_bp
         from routes.tasks import tasks_bp
+        from routes.subscription import subscription_bp
         
         app.register_blueprint(upload_bp)
         app.register_blueprint(tasks_bp)
+        app.register_blueprint(subscription_bp, url_prefix='/subscription')
         
         # Main route
         @app.route('/')

@@ -36,11 +36,25 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('subscription.pricing') }}">
+                            <i data-feather="star" class="me-1"></i>
+                            Pricing
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('tasks.list_worksheets') }}">
                             <i data-feather="file-text" class="me-1"></i>
                             Worksheets
                         </a>
                     </li>
+                    {% if session.get('user_email') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('subscription.manage') }}">
+                                <i data-feather="user" class="me-1"></i>
+                                Account
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

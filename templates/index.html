@@ -14,6 +14,14 @@
             <p class="lead text-muted">
                 Transform your educational worksheets into interactive learning experiences using the power of AI.
             </p>
+            
+            <!-- Pricing link -->
+            <div class="mb-3">
+                <a href="{{ url_for('subscription.pricing') }}" class="btn btn-outline-primary">
+                    <i data-feather="star" class="me-2"></i>
+                    View Pricing & Features
+                </a>
+            </div>
         </div>
 
         <!-- Upload Section -->
@@ -26,6 +34,19 @@
             </div>
             <div class="card-body">
                 <form action="{{ url_for('upload.upload_file') }}" method="post" enctype="multipart/form-data" id="uploadForm">
+                    <div class="mb-4">
+                        <label for="email" class="form-label">
+                            <i data-feather="mail" class="me-2"></i>
+                            Your Email Address
+                        </label>
+                        <input type="email" class="form-control" id="email" name="email" required 
+                               placeholder="Enter your email address" 
+                               value="{{ session.get('user_email', '') }}">
+                        <div class="form-text">
+                            We'll use this to track your usage and send you updates (Free: 3 worksheets)
+                        </div>
+                    </div>
+                    
                     <div class="mb-4">
                         <label for="file" class="form-label">
                             <i data-feather="file" class="me-2"></i>

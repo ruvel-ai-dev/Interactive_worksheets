@@ -25,10 +25,12 @@ The application follows a modular Flask architecture with clear separation of co
 - **Worksheet**: Stores uploaded file metadata, extracted text, and processing status
 - **Task**: Stores generated interactive tasks with JSON data structure for task-specific information
 - **TaskResponse**: Prepared for future student response tracking (currently unused)
+- **User**: Stores user information, subscription status, and usage tracking
 
 ### Route Blueprints
-- **upload_bp**: Handles file upload and processing workflow
+- **upload_bp**: Handles file upload and processing workflow with subscription limits
 - **tasks_bp**: Manages task viewing and API endpoints for task interaction
+- **subscription_bp**: Manages Stripe payments, subscription management, and user accounts
 
 ### Frontend Components
 - **Bootstrap-based UI**: Dark theme with responsive design
@@ -52,6 +54,7 @@ The application follows a modular Flask architecture with clear separation of co
 - **PyPDF2**: PDF text extraction
 - **python-docx**: DOCX text extraction
 - **Werkzeug**: File handling utilities
+- **Stripe**: Payment processing and subscription management
 
 ### Frontend Libraries
 - **Bootstrap**: UI framework with custom dark theme
@@ -60,6 +63,7 @@ The application follows a modular Flask architecture with clear separation of co
 
 ### External APIs
 - **OpenAI GPT-4o**: Core AI service for generating educational tasks from text content
+- **Stripe**: Payment processing and subscription management service
 
 ## Deployment Strategy
 
@@ -78,6 +82,7 @@ Database configuration supports both SQLite (development) and PostgreSQL (produc
 - July 06, 2025: Initial setup and core functionality
 - July 06, 2025: Fixed template rendering issues with dictionary key access 
 - July 06, 2025: Significantly improved AI task generation to create content-specific questions based on actual worksheet material rather than generic questions
+- July 06, 2025: Added complete subscription system with Stripe integration, usage limits, and premium features
 
 ## User Preferences
 

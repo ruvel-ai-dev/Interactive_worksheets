@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}Pricing - AI Worksheet Converter{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 mb-3">Choose Your Plan</h1>
+        <p class="lead text-muted">Transform your worksheets into interactive learning experiences</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <!-- Free Plan -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <h3 class="card-title">Free</h3>
+                        <div class="display-4 mb-2">$0</div>
+                        <p class="text-muted">Perfect for trying out</p>
+                    </div>
+                    
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="feather-check text-success me-2"></i>
+                            3 worksheet conversions
+                        </li>
+                        <li class="mb-2">
+                            <i class="feather-check text-success me-2"></i>
+                            All task types (Multiple choice, Fill-in-blank, etc.)
+                        </li>
+                        <li class="mb-2">
+                            <i class="feather-check text-success me-2"></i>
+                            PDF & DOCX support
+                        </li>
+                        <li class="mb-2">
+                            <i class="feather-check text-success me-2"></i>
+                            Interactive web tasks
+                        </li>
+                    </ul>
+                    
+                    <div class="d-grid mt-4">
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
+                            Get Started Free
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Premium Plan -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 border-primary shadow">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <span class="badge bg-white text-primary">Most Popular</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <h3 class="card-title">Premium</h3>
+                        <div class="display-4 mb-2">$9.99</div>
+                        <p class="text-muted">per month</p>
+                    </div>
+                    
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="feather-check text-success me-2"></i>
+                            <strong>Unlimited</strong> worksheet conversions
+                        </li>
+                        <li class="mb-2">
+                            <i class="feather-check text-success me-2"></i>
+                            All task types with AI optimization
+                        </li>
+                        <li class="mb-2">
+                            <i class="feather-check text-success me-2"></i>
+                            Priority processing (faster AI)
+                        </li>
+                        <li class="mb-2">
+                            <i class="feather-check text-success me-2"></i>
+                            Advanced analytics
+                        </li>
+                        <li class="mb-2">
+                            <i class="feather-check text-success me-2"></i>
+                            Export to multiple formats
+                        </li>
+                        <li class="mb-2">
+                            <i class="feather-check text-success me-2"></i>
+                            Email support
+                        </li>
+                    </ul>
+                    
+                    <div class="d-grid mt-4">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#subscribeModal">
+                            Subscribe Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">Why Choose AI Worksheet Converter?</h2>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="text-center">
+                <i class="feather-zap text-primary mb-3" style="font-size: 2.5rem;"></i>
+                <h4>AI-Powered</h4>
+                <p class="text-muted">Advanced GPT-4 creates intelligent, content-specific questions from your worksheets</p>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="text-center">
+                <i class="feather-monitor text-primary mb-3" style="font-size: 2.5rem;"></i>
+                <h4>Interactive Learning</h4>
+                <p class="text-muted">Transform static worksheets into engaging, interactive web experiences</p>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="text-center">
+                <i class="feather-clock text-primary mb-3" style="font-size: 2.5rem;"></i>
+                <h4>Save Time</h4>
+                <p class="text-muted">Convert worksheets in minutes instead of hours of manual work</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Subscribe Modal -->
+<div class="modal fade" id="subscribeModal" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="subscribeModalLabel">Subscribe to Premium</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ url_for('subscription.subscribe') }}" method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" required 
+                               placeholder="Enter your email address">
+                        <div class="form-text">We'll use this to create your account and send receipts.</div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="feather-info me-2"></i>
+                        <strong>Secure Payment:</strong> You'll be redirected to Stripe for secure payment processing.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Continue to Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Auto-focus email field when modal opens
+document.getElementById('subscribeModal').addEventListener('shown.bs.modal', function () {
+    document.getElementById('email').focus();
+});
+</script>
+{% endblock %}

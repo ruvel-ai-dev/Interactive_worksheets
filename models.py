@@ -11,6 +11,7 @@ class Worksheet(db.Model):
     extracted_text = db.Column(Text)
     upload_date = db.Column(db.DateTime, default=datetime.utcnow)
     processing_status = db.Column(db.String(20), default='pending')  # pending, processing, completed, failed
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)  # Link to user
     
     # Relationship to tasks
     tasks = db.relationship('Task', backref='worksheet', lazy=True, cascade='all, delete-orphan')
@@ -43,3 +44,33 @@ class TaskResponse(db.Model):
     response_data = db.Column(JSON)
     is_correct = db.Column(db.Boolean)
     submitted_date = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class User(db.Model):
+    """Model for storing user information and subscription status"""
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    subscription_status = db.Column(db.String(20), default='free')  # free, active, past_due, canceled
+    stripe_customer_id = db.Column(db.String(255))
+    stripe_subscription_id = db.Column(db.String(255))
+    subscription_start_date = db.Column(db.DateTime)
+    subscription_end_date = db.Column(db.DateTime)
+    worksheets_processed = db.Column(db.Integer, default=0)
+    created_date = db.Column(db.DateTime, default=datetime.utcnow)
+    last_active = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def is_premium(self):
+        """Check if user has active premium subscription"""
+        return self.subscription_status == 'active'
+    
+    def can_process_worksheet(self):
+        """Check if user can process another worksheet"""
+        if self.is_premium():
+            return True
+        return self.worksheets_processed < 3  # Free users get 3 worksheets
+    
+    def increment_usage(self):
+        """Increment worksheet processing count"""
+        self.worksheets_processed += 1
+        self.last_active = datetime.utcnow()
+        db.session.commit()

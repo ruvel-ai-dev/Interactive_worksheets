@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Subscription Successful - AI Worksheet Converter{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="mb-4">
+                <i class="feather-check-circle text-success" style="font-size: 4rem;"></i>
+            </div>
+            
+            <h1 class="display-4 mb-3">Welcome to Premium!</h1>
+            <p class="lead text-muted mb-4">
+                Your subscription is now active. You have unlimited access to convert worksheets into interactive learning experiences.
+            </p>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Subscription Details</h5>
+                    <p class="mb-1"><strong>Email:</strong> {{ user.email }}</p>
+                    <p class="mb-1"><strong>Status:</strong> 
+                        <span class="badge bg-success">{{ user.subscription_status|title }}</span>
+                    </p>
+                    <p class="mb-0"><strong>Next Billing:</strong> {{ user.subscription_end_date.strftime('%B %d, %Y') }}</p>
+                </div>
+            </div>
+            
+            <div class="d-grid gap-2">
+                <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+                    <i class="feather-upload me-2"></i>
+                    Start Converting Worksheets
+                </a>
+                <a href="{{ url_for('subscription.manage') }}" class="btn btn-outline-secondary">
+                    <i class="feather-settings me-2"></i>
+                    Manage Subscription
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
