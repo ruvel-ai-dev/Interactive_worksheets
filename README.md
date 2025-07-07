@@ -32,7 +32,7 @@ Upload worksheets, enter your email, and hit **Generate Interactive Tasks**.
 
 Automatically generate interactive question types: open-ended, drag & drop, and multiple choice.
 
-<img src="WC Question Creation .jpg" width="800"/>
+<img src="WC Question Creation.jpg" width="800"/>
 
 ---
 
